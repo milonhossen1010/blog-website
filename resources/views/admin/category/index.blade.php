@@ -59,7 +59,7 @@
                                      
                                 @else
                                     <tr>
-                                        <td colspan="5">No Category found.</td>
+                                        <td colspan="5"><h5 class=" text-center">No Category found.</h5></td>
                                     </tr>
                                 @endif
 
