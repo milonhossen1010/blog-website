@@ -87,24 +87,5 @@
     </div>
 </div>
 
-<style>
-    .bootstrap-switch-container {
-    border: 1px solid #ced4da;
-    border-radius: .25rem;
-    cursor: pointer;
-    direction: ltr;
-    display: inline-block;
-    line-height: .5rem;
-    overflow: hidden;
-    position: relative;
-    text-align: left;
-    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    vertical-align: middle;
-    z-index: 0;
-}
-</style>
+ 
 @endsection
