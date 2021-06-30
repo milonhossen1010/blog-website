@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('name', 'Category')
+@section('name', 'Tag')
 @section('main')
 
 
@@ -13,9 +13,9 @@
 
                     <div class="card-header">
                         <div class=" d-flex justify-content-between align-items-center">
-                            <h3 class="card-title">Category list</h3>
-                            <a class="btn btn-primary" href="{{ route('category.create') }}"><i class="fas fa-plus"></i>
-                                Create category</a>
+                            <h3 class="card-title">Tag list</h3>
+                            <a class="btn btn-primary" href="{{ route('tag.create') }}"><i class="fas fa-plus"></i>
+                                Create tag</a>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -32,20 +32,20 @@
                             </thead>
                             <tbody>
 
-                                @if ($categories->count())
+                                @if ($tags->count())
                                
-                                @foreach ($categories as $category)
+                                @foreach ($tags as $tag)
 
                                 <tr>
                                     <td>{{ $loop->index +1 }}</td>
-                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $tag->name }}</td>
                                     <td>
-                                        {{ $category->slug }}
+                                        {{ $tag->slug }}
                                     </td>
-                                    <td><span class="badge bg-danger">{{ $category->id }}</span></td>
+                                    <td><span class="badge bg-danger">{{ $tag->id }}</span></td>
                                     <td class=" d-flex">
-                                        <a class="btn btn-primary btn-sm mr-1" href="{{ route('category.edit', $category->id) }}"><i class="fa fa-edit"></i></a>
-                                        <form action="{{ route('category.destroy', $category->id) }}" method="POST">
+                                        <a class="btn btn-primary btn-sm mr-1" href="{{ route('tag.edit', $tag->id) }}"><i class="fa fa-edit"></i></a>
+                                        <form action="{{ route('tag.destroy', $tag->id) }}" method="POST">
                                         @method('DELETE')
                                         @csrf
                                         <button class="btn btn-danger btn-sm mr-1" type="submit" ><i class="fa fa-trash"></i></button>
@@ -59,7 +59,7 @@
                                      
                                 @else
                                     <tr>
-                                        <td colspan="5">No Category found.</td>
+                                        <td colspan="5"><h4 class=" text-center">No tag found.</h4></td>
                                     </tr>
                                 @endif
 

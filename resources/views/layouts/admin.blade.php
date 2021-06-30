@@ -198,6 +198,13 @@
             </a>
           </li> 
 
+          <li class="nav-item">
+            <a href="{{ route('tag.index') }}" class="nav-link">
+              <i class="fas fa-tags nav-icon"></i>
+              <p>Tag</p>
+            </a>
+          </li> 
+
 
           <li class="nav-item">
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()" class="nav-link bg-danger">

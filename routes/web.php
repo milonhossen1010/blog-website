@@ -3,6 +3,7 @@
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
  
 
 /*
@@ -49,5 +50,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
 
     //Category controller
     Route::resource('category', 'App\Http\Controllers\CategoryController');
+    //Tag Controller
+    Route::resource('tag', TagController::class);
 
 });
