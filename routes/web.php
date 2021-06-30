@@ -1,7 +1,9 @@
 <?php
 
+use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+ 
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,16 @@ Route::get('/contact', function () {
     return view('website.contact');
 });
 
-Route::get('/test', function () {
-    return view('admin.index');
+ 
+
+// Admin panel route
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
+    //Dashboard load
+    Route::get('dashboard', function(){
+        return view('admin.index');
+    })->name('dashboard');
+
+    //Category controller
+    Route::resource('category', 'App\Http\Controllers\CategoryController');
+
 });

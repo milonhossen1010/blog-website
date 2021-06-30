@@ -8,7 +8,9 @@
   <title>AdminLTE 3 | Starter</title>
 
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="{{asset('admin')}}/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="{{asset('admin')}}/plugins/fontawesome-free/css/all.min.css">
+  <!--toastr-->
+  <link rel="stylesheet" href="{{asset('admin')}}/css/toastr.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('admin')}}/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
@@ -165,8 +167,8 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Starter Pages
@@ -188,15 +190,22 @@
               </li>
             </ul>
           </li>
+
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
-              </p>
+            <a href="{{ route('category.index') }}" class="nav-link">
+              <i class="fas fa-tags nav-icon"></i>
+              <p>Categories</p>
+            </a>
+          </li> 
+
+
+          <li class="nav-item">
+            <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()" class="nav-link bg-danger">
+              <i class="fas fa-sign-out-alt nav-icon"></i>
+              <p>Logout</p>
             </a>
           </li>
+
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -206,6 +215,24 @@
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
+
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0 text-dark">@yield('name')</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                  <li class="breadcrumb-item active">@yield('name')</li>
+                </ol>
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
   
 @section('main')
     
@@ -236,15 +263,26 @@
     <strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
 </div>
+
+<form id="logout-form" action="{{ route('logout') }}" style="display: none" method="POST">@csrf</form>
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
 
 <!-- jQuery -->
-<script src="{{asset('admin')}}/jquery/jquery.min.js"></script>
+<script src="{{asset('admin')}}/plugins/jquery/jquery.min.js"></script>
+<!--Toastr-->
+<script src="{{asset('admin')}}/js/toastr.min.js"></script>
 <!-- Bootstrap 4 -->
-<script src="{{asset('admin')}}/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="{{asset('admin')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin')}}/js/adminlte.min.js"></script>
+<script>
+  @if (Session::has('success'))
+  toastr.success("{{ Session::get('success') }}")
+  @endif
+  
+
+</script>
 </body>
 </html>
