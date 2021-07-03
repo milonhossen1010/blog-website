@@ -26,7 +26,8 @@ class TagController extends Controller
      */
     public function create()
     {
-        return view('admin.tag.create');
+        // return view('admin.tag.create');
+        return "hell";
     }
 
     /**
@@ -37,19 +38,21 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //Validation
-        $request->validate([
-            'name'  =>  'required|unique:tags'
-        ]);
+        // //Validation
+        // $request->validate([
+        //     'name'  =>  'required|unique:tags'
+        // ]);
 
-        //Data store 
-        Tag::create([
-            'name'          =>  $request->name,
-            'slug'          =>  Str::slug($request->name),
-            'description'   =>  $request->description,
-        ]);
+        // //Data store 
+        // Tag::create([
+        //     'name'          =>  $request->name,
+        //     'slug'          =>  Str::slug($request->name),
+        //     'description'   =>  $request->description,
+        // ]);
 
-        return redirect()->back()->with('success', 'Tag added successful!!');
+        // return redirect()->back()->with('success', 'Tag added successful!!');
+
+        return '$request->name';
     }
 
     /**
@@ -106,8 +109,13 @@ class TagController extends Controller
     public function destroy(Tag $tag)
     {
         if($tag){
+
             $tag->delete();
             return redirect()->back()->with('success','Tag deleted successful!');
         }
+    }
+
+    public function tagCreate(Request $request){
+       return $request->all();
     }
 }

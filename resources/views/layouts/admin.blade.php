@@ -284,6 +284,9 @@
 <script src="{{asset('admin')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin')}}/js/adminlte.min.js"></script>
+<!-- Custom js -->
+<script src="{{asset('admin')}}/js/script.js"></script>
+
 <script>
   @if (Session::has('success'))
   toastr.success("{{ Session::get('success') }}")

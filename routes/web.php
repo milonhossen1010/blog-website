@@ -53,6 +53,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::resource('category', 'App\Http\Controllers\CategoryController');
     //Tag Controller
     Route::resource('tag', TagController::class);
+    Route::post('tag-create', [TagController::class, 'tagCreate']);
     //Post Controller
     Route::resource('post', PostController::class);
 

@@ -8,7 +8,32 @@
 <div class="content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-12">
+            <div class="col-lg-4">
+                <div class="card card-secondary">
+                    <div class="card-header">
+                      <h3 class="card-title">Add Tag</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="POST" id="tagForm">
+                        @csrf
+                      <div class="card-body">
+                        <div class="form-group">
+                          <label for="exampleInputEmail1">Name</label>
+                          <input name="name" type="text" class="form-control" placeholder="Title">
+                        </div>
+                      
+                      </div>
+                      <!-- /.card-body -->
+      
+                      <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+            </div>
+
+            <div class="col-lg-8">
                 <div class=" card">
 
                     <div class="card-header">
