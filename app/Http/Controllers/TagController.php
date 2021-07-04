@@ -26,8 +26,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        // return view('admin.tag.create');
-        return "hell";
+      
     }
 
     /**
@@ -39,8 +38,8 @@ class TagController extends Controller
     public function store(Request $request)
     {
         //Validation
-        $dd = $request->validate([
-            'name'  =>  'required|unique:tags'
+        $request->validate([
+            'name'  =>  'unique:tags'
         ]);
 
         //Data store 
@@ -48,11 +47,7 @@ class TagController extends Controller
             'name'          =>  $request->name,
             'slug'          =>  Str::slug($request->name),
             'description'   =>  $request->description,
-        ]);
-
-     
-
-        
+        ]); 
 
        
     }
@@ -65,7 +60,7 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        return $id;
+       
     }
 
     /**
@@ -76,7 +71,6 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        // return view('admin.tag.edit', compact('tag'));
         return $tag;
     }
 
@@ -115,15 +109,11 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        if($tag){
-
-            $tag->delete();
-            return redirect()->back()->with('success','Tag deleted successful!');
-        }
+        
     }
 
     /**
-     * Undocumented function
+     * Show all tags function
      *
      * @return void
      */
@@ -133,7 +123,7 @@ class TagController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Delete function
      *
      * @param [type] $id
      * @return void
@@ -143,13 +133,25 @@ class TagController extends Controller
         $tag -> delete();
     }
 
-    
+    /**
+     * Update function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function updateTag(Request $request){
         $tag = Tag::find($request->id);
+        // Validation
+        $request->validate([
+            'name'  =>  "unique:tags,name,$tag->id"
+        ]);
+
+        
 
         $tag -> name = $request->name;
         $tag -> slug = Str::slug($request->name);
         $tag -> update();
+         
     }
 
 }

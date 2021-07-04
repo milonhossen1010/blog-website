@@ -5,111 +5,88 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use GuzzleHttp\Promise\Create;
 
 class CategoryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Index function
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
     public function index()
     {
-        $categories = Category::latest()-> paginate(20);
-        return view('admin.category.index', compact('categories'));
+        return view('admin.category.index');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * showAll function
      *
-     * @return \Illuminate\Http\Response
+     * @return void
      */
-    public function create()
+    public function showAll()
     {
-        return view('admin.category.create');
+        return json_encode(Category::latest()->get());
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store function
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
     public function store(Request $request)
     {
-        //Validate
         $request->validate([
-            'name' => 'required|unique:categories' 
+            'name'  => 'unique:categories,name'
         ]);
 
-        //data send database
-        $category = Category::create([
-            'name'          =>  $request -> name,
-            'slug'          =>  Str::slug($request -> name),
-            'description'   =>  $request -> description
+        Category::create([
+            'name'  =>  $request->name,
+            'slug'  =>  Str::slug($request->name)
         ]);
-
-        return redirect()->back()->with('success','Category added successful!!');
     }
 
     /**
-     * Display the specified resource.
+     * Edit function
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param [type] $id
+     * @return void
      */
     public function edit(Category $category)
     {
-        return view('admin.category.edit', compact('category'));
+        return $category;
     }
 
     /**
-     * Update the specified resource in storage.
+     * update function
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Category $category
+     * @return void
      */
     public function update(Request $request, Category $category)
     {
-         //Validate
-         $request->validate([
-            "name" => "required|unique:categories,name,$category->id"
+        $request->validate([
+            'name'  =>  'unique:categories,name,$category->id'
         ]);
-
-        //data send database
-        $category -> name          =  $request -> name;
-        $category -> slug          =  Str::slug($request -> name);
-        $category -> description   =  $request -> description;
-        $category -> save();
-       
-        return redirect()->back()->with('success','Category update successful!!');
+        $category->name = $request->name;
+        $category->slug = Str::slug($request->name);
+        $category->update();
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Destroy function
      *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
+     * @param [type] $id
+     * @return void
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-        if($category){
-            $category->delete();
-
-            return redirect()->back()-> with('success','Category delete successful!!');
-        }
+        $category = Category::find($id);
+        $category->delete();
     }
+
+
+
+
 }

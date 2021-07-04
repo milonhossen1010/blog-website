@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
  
 
 /*
@@ -50,12 +51,17 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     })->name('dashboard');
 
     //Category controller
-    Route::resource('category', 'App\Http\Controllers\CategoryController');
+    Route::get('category', [CategoryController::class, 'index'])->name('category.index');
+    Route::post('category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('category/show-all', [CategoryController::class, 'showAll'])->name('category.showall');
+    Route::get('category/destroy/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::get('category/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('category/update/{category}', [CategoryController::class, 'update'])->name('category.update');
     //Tag Controller
     Route::resource('tag', TagController::class);
-    Route::get('show-all-tag', [TagController::class, 'showAll'])->name('showall');
-    Route::get('delete-tag/{id}', [TagController::class, 'deleteTag'])->name('delete-tag');
-    Route::post('update-tag', [TagController::class, 'updateTag'])->name('update-tag');
+    Route::get('show-all-tag', [TagController::class, 'showAll'])->name('tag.showall');
+    Route::get('delete-tag/{id}', [TagController::class, 'deleteTag'])->name('tag.delete-tag');
+    Route::post('update-tag', [TagController::class, 'updateTag'])->name('tag.update-tag');
     //Post Controller
     Route::resource('post', PostController::class);
 

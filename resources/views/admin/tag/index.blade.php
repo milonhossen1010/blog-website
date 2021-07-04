@@ -57,11 +57,11 @@
                             </thead>
                             <tbody>
 
-                                @if ($tags->count())
+                         
 
 
-
-                                <tr v-for="(tag, index) in tags.all">
+                                
+                                <tr v-if="tags.all" v-for="(tag, index) in tags.all">
                                     <td v-html="index+1"></td>
                                     <td v-html="tag.name"></td>
                                     <td v-html="tag.slug"></td>
@@ -75,13 +75,13 @@
                                     </td>
                                 </tr>
 
-                                @else
-                                <tr>
+                            
+                                <tr v-else>
                                     <td colspan="5">
                                         <h4 class=" text-center">No tag found.</h4>
                                     </td>
                                 </tr>
-                                @endif
+                           
 
                             </tbody>
                         </table>
@@ -107,11 +107,10 @@
         </div>
         <div class="modal-body">
             <form id="editTagForm">
-                @csrf
                     <div class="form-group">
                         <label for="exampleInputEmail1">Name</label>
                         <input v-model="tags.edit.name" name="name" type="text" class="form-control"
-                            placeholder="name">
+                            placeholder="Name">
                     </div>
                 <!-- /.card-body -->
 
