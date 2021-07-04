@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+{{-- @extends('layouts.admin')
 @section('name', 'Tag Create')
 @section('main')
 
@@ -58,4 +58,4 @@
     </div><!-- /.card -->
 </div>
 
-@endsection
+@endsection --}}

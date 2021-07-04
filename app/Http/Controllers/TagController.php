@@ -38,21 +38,23 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        // //Validation
-        // $request->validate([
-        //     'name'  =>  'required|unique:tags'
-        // ]);
+        //Validation
+        $dd = $request->validate([
+            'name'  =>  'required|unique:tags'
+        ]);
 
-        // //Data store 
-        // Tag::create([
-        //     'name'          =>  $request->name,
-        //     'slug'          =>  Str::slug($request->name),
-        //     'description'   =>  $request->description,
-        // ]);
+        //Data store 
+        Tag::create([
+            'name'          =>  $request->name,
+            'slug'          =>  Str::slug($request->name),
+            'description'   =>  $request->description,
+        ]);
 
-        // return redirect()->back()->with('success', 'Tag added successful!!');
+     
 
-        return '$request->name';
+        
+
+       
     }
 
     /**
@@ -61,9 +63,9 @@ class TagController extends Controller
      * @param  \App\Models\Tag  $tag
      * @return \Illuminate\Http\Response
      */
-    public function show(Tag $tag)
+    public function show($id)
     {
-        //
+        return $id;
     }
 
     /**
@@ -74,7 +76,8 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        return view('admin.tag.edit', compact('tag'));
+        // return view('admin.tag.edit', compact('tag'));
+        return $tag;
     }
 
     /**
@@ -86,18 +89,22 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //Validation
-        $request->validate([
-            'name'  =>  "required|unique:tags,name,$tag->id"
-        ]);
+        // //Validation
+        // $request->validate([
+        //     'name'  =>  "required|unique:tags,name,$tag->id"
+        // ]);
 
-        //Update
-        $tag->name          = $request->name;
-        $tag->slug          = Str::slug($request->name);
-        $tag->description   = $request->description;
+        // //Update
+        // $tag->name          = $request->name;
+        // $tag->slug          = Str::slug($request->name);
+        // $tag->description   = $request->description;
 
-        $tag->update();
-        return redirect()->route('tag.index')->with('success','Tag update successful!!');
+        // $tag->update();
+        // return redirect()->route('tag.index')->with('success','Tag update successful!!');
+
+        return $request->name;
+
+        
     }
 
     /**
@@ -115,7 +122,34 @@ class TagController extends Controller
         }
     }
 
-    public function tagCreate(Request $request){
-       return $request->all();
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
+    public function showAll(){
+       $tags =  Tag::latest()->get();
+       return json_encode($tags);
     }
+
+    /**
+     * Undocumented function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function deleteTag($id){
+        $tag = Tag::find($id);
+        $tag -> delete();
+    }
+
+    
+    public function updateTag(Request $request){
+        $tag = Tag::find($request->id);
+
+        $tag -> name = $request->name;
+        $tag -> slug = Str::slug($request->name);
+        $tag -> update();
+    }
+
 }

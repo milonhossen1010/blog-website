@@ -53,7 +53,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::resource('category', 'App\Http\Controllers\CategoryController');
     //Tag Controller
     Route::resource('tag', TagController::class);
-    Route::post('tag-create', [TagController::class, 'tagCreate']);
+    Route::get('show-all-tag', [TagController::class, 'showAll'])->name('showall');
+    Route::get('delete-tag/{id}', [TagController::class, 'deleteTag'])->name('delete-tag');
+    Route::post('update-tag', [TagController::class, 'updateTag'])->name('update-tag');
     //Post Controller
     Route::resource('post', PostController::class);
 

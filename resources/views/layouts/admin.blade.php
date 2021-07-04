@@ -5,19 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-  <title>AdminLTE 3 | Starter</title>
+  <title>@yield('name') | Admin</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('admin')}}/plugins/fontawesome-free/css/all.min.css">
-  <!--toastr-->
+  <!--Toastr-->
   <link rel="stylesheet" href="{{asset('admin')}}/css/toastr.min.css">
+  <!-- Alertify -->
+  <link rel="stylesheet" href="{{asset('admin')}}/css/alertify.min.css">
+  <link rel="stylesheet" href="{{asset('admin')}}/css/default.min.css">
+  <!-- IziModal -->
+  <link rel="stylesheet" href="{{asset('admin')}}/css/iziModal.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('admin')}}/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
-<div class="wrapper">
+<div id="app" class="wrapper">
 
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -280,16 +285,24 @@
 <script src="{{asset('admin')}}/plugins/jquery/jquery.min.js"></script>
 <!--Toastr-->
 <script src="{{asset('admin')}}/js/toastr.min.js"></script>
+<!-- Alertify -->
+<script src="{{asset('admin')}}/js/alertify.min.js"></script>
+<!-- IziModal -->
+<script src="{{asset('admin')}}/js/iziModal.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="{{asset('admin')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{asset('admin')}}/js/adminlte.min.js"></script>
+<!--Vue js code-->
+<script src="{{asset('admin')}}/js/axios.min.js"></script>
+<script src="{{asset('admin')}}/js/vue.js"></script>
+<script src="{{asset('admin')}}/js/vue-router.js"></script>
 <!-- Custom js -->
 <script src="{{asset('admin')}}/js/script.js"></script>
 
 <script>
   @if (Session::has('success'))
-  toastr.success("{{ Session::get('success') }}")
+  alertify.success("{{ Session::get('success') }}")
   @endif
   
 
