@@ -41,7 +41,7 @@
 
                                 <tr>
                                     <td>{{ $loop->index +1 }}</td>
-                                    <td><img src="{{ $post->image }}" alt=""></td>
+                                    <td><img src="{{ $post->image }}" alt="" style="height: 50px"></td>
                                     <td>{{ $post->title }}</td>
                                     <td>
                                         {{ $post->category_id }}
@@ -53,7 +53,12 @@
                                         {{ $post->user_id }}
                                     </td>
                                     <td>
-                                        <div class="bootstrap-switch-container" style="width: 126px; margin-left: 0px;"><span class="bootstrap-switch-handle-on bootstrap-switch-success" style="width: 42px;">ON</span><span class="bootstrap-switch-label" style="width: 42px;">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-danger" style="width: 42px;">OFF</span><input type="checkbox" name="my-checkbox" checked="" data-bootstrap-switch="" data-off-color="danger" data-on-color="success"></div>
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch">
+                                              <input type="checkbox" class="custom-control-input" id="{{ $post->id }}">
+                                              <label class="custom-control-label" for="{{ $post->id }}"></label>
+                                            </div>
+                                          </div>
                                     </td>
                                     <td class=" d-flex">
                                         <a class="btn btn-primary btn-sm mr-1" href="{{ route('post.edit', $post->id) }}"><i class="fa fa-edit"></i></a>

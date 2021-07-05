@@ -9,4 +9,9 @@ class Category extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    //Post id attach
+    public function posts(){
+        $this->belongsToMany('App\Models\Post');
+    }
 }

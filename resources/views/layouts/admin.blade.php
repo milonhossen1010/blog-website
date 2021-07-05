@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="{{asset('admin')}}/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  @yield('style')
 </head>
 <body class="hold-transition sidebar-mini">
 <div id="app" class="wrapper">
@@ -197,6 +198,13 @@
           </li>
 
           <li class="nav-item">
+            <a href="{{ route('post.index') }}" class="nav-link">
+              <i class="fas fa-copy nav-icon"></i>
+              <p>Post</p>
+            </a>
+          </li> 
+
+          <li class="nav-item">
             <a href="{{ route('category.index') }}" class="nav-link">
               <i class="fas fa-tags nav-icon"></i>
               <p>Categories</p>
@@ -299,6 +307,8 @@
 <script src="{{asset('admin')}}/js/vue-router.js"></script>
 <!-- Custom js -->
 <script src="{{asset('admin')}}/js/script.js"></script>
+@include('inc.validation')
+@yield('script')
 
 <script>
   @if (Session::has('success'))
