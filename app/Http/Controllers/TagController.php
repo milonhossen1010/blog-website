@@ -45,7 +45,7 @@ class TagController extends Controller
         //Data store 
         Tag::create([
             'name'          =>  $request->name,
-            'slug'          =>  Str::slug($request->name),
+            'slug'          =>  str_replace(' ','-',$request->name),
             'description'   =>  $request->description,
         ]); 
 

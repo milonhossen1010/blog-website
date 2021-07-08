@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
-
+    
+ 
     //Vue js code
     const root = new Vue({
         el: '#app',
@@ -20,6 +21,9 @@ $(document).ready(function () {
                     name: '',
                     id: ''
                 },
+                all: []
+            },
+            posts: {
                 all: []
             }
 
@@ -183,6 +187,56 @@ $(document).ready(function () {
                 }).catch((error)=>{
                     alertify.error('The name already exits!');
                 });
+            },
+
+            /**
+             * Post function
+             */
+            //Show all function
+            showAllPost: function(){
+                axios.post('/admin/post/showall').then((response)=>{
+                    root.posts.all=response.data;
+
+                });
+            },
+            //Delete function
+            deletePost: function(id, event){
+                event.preventDefault();
+                alertify.confirm("Delete alert!","Are you sure?",
+                    function(){
+                        axios.delete(`/admin/post/${id}`).then((response)=>{
+                    
+                            alertify.success('Post delete successful!!');
+                            root.showAllPost();
+                        });
+                    },
+                    function(){
+                        alertify.error('Cancel');
+                    });
+                
+            },
+
+            //Post Status function
+            statusPost: function(id){
+                axios.get(`/admin/post/status/${id}`).then(function(response){
+                    if(response.data){
+                        alertify.success('Post active successful.');
+                    }else{
+                        alertify.success('Post deactivate successful.');
+                    }
+                });
+            },
+
+            //Edit function
+            editFunction: function(id, event){
+                event.preventDefault();
+                $("#postEditModal").modal("show");
+                // function afterModalTransition(e) {
+                //     e.setAttribute("style", "display: none !important;");
+                //   }
+                //   $('#postEditModal').on('hide.bs.modal', function (e) {
+                //       setTimeout( () => afterModalTransition(this), 200);
+                //   })
             }
 
         },
@@ -190,6 +244,7 @@ $(document).ready(function () {
         created: function () {
             this.showAllTags();
             this.showAllCategory();
+            this.showAllPost();
         }
     });
 

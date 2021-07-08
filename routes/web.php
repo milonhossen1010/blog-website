@@ -64,5 +64,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::post('update-tag', [TagController::class, 'updateTag'])->name('tag.update-tag');
     //Post Controller
     Route::resource('post', PostController::class);
+    Route::post('post/showall', [PostController::class, 'showall'])->name('post.showall');
+    Route::get('post/status/{post}', [PostController::class, 'status'])->name('post.status');
 
 });

@@ -10,7 +10,7 @@
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{asset('admin')}}/plugins/fontawesome-free/css/all.min.css">
   <!--Toastr-->
-  <link rel="stylesheet" href="{{asset('admin')}}/css/toastr.min.css">
+  {{-- <link rel="stylesheet" href="{{asset('admin')}}/css/toastr.min.css"> --}}
   <!-- Alertify -->
   <link rel="stylesheet" href="{{asset('admin')}}/css/alertify.min.css">
   <link rel="stylesheet" href="{{asset('admin')}}/css/default.min.css">
@@ -18,6 +18,10 @@
   <link rel="stylesheet" href="{{asset('admin')}}/css/iziModal.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{asset('admin')}}/css/adminlte.min.css">
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   @yield('style')
@@ -292,7 +296,7 @@
 <!-- jQuery -->
 <script src="{{asset('admin')}}/plugins/jquery/jquery.min.js"></script>
 <!--Toastr-->
-<script src="{{asset('admin')}}/js/toastr.min.js"></script>
+{{-- <script src="{{asset('admin')}}/js/toastr.min.js"></script> --}}
 <!-- Alertify -->
 <script src="{{asset('admin')}}/js/alertify.min.js"></script>
 <!-- IziModal -->
@@ -317,5 +321,11 @@
   
 
 </script>
+
+<style>
+.animate__animated.animate__zoomIn {
+  --animate-duration: 0.5s;
+}
+</style>
 </body>
 </html>

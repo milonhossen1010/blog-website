@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Post;
+use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -16,8 +18,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::latest()->get();
-        return view('admin.post.index', compact('posts'));
+        $posts      = Post::latest()->get();
+        $categories = Category::latest()->get();
+        $tags       = Tag::latest()->get();
+        return view('admin.post.index', compact(['posts','categories','tags']));
     }
 
     /**
@@ -45,7 +49,29 @@ class PostController extends Controller
             'categories'    =>  'required',
             'tags'          =>  'required',
             'description'   =>  'required',
+            'image'         =>  'required',
         ]);
+
+        //Image upload function
+        if($request->hasFile('image')){
+           $image = $request->file('image');
+           $imageNewName = time(). '.' . $image->getClientOriginalExtension();
+           $image->move(public_path('storage/images/post'),$imageNewName);
+            
+        }
+
+        $post = Post::create([
+            'title'         =>  $request->title,
+            'slug'          =>   Str::slug($request->title),
+            'description'   =>  $request->description,
+            'user_id'       =>  Auth::user()->id,
+            'image'         =>  '/storage/images/post/'. $imageNewName,
+        ]);
+
+        $post->categories()->sync($request->categories);
+        $post->tags()->sync($request->categories);
+
+        return redirect()->back()->with('success','Post added successful!'); 
     }
 
     /**
@@ -56,7 +82,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        
     }
 
     /**
@@ -90,6 +116,47 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+      
+          if($post){
+            //Image unlink
+            if(file_exists(public_path($post->image))){
+                unlink(public_path($post->image));
+            }
+            
+            //Post category and tag detach
+            $post->categories()->detach();
+            $post->tags()->detach();
+            //Delete post
+            $post->delete();
+          }
+       
+        
+    }
+
+    /**
+     * Showall function
+     *
+     * @return void
+     */
+    public function showall(){
+        return Post::with(['categories','user','tags'])->latest()->get();
+    }
+
+    /**
+     * Status function
+     *
+     * @param Post $post
+     * @return void
+     */
+    public function status(Post $post){
+        if($post->status){
+            $post->status= 0;
+            $post->update();
+            return 0;
+        }else{
+            $post->status=1;
+            $post->update();
+            return 1;
+        }
     }
 }

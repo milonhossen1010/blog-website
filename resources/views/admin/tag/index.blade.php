@@ -97,7 +97,7 @@
 
 <!-- Modal structure -->
 <div class="modal " id="tagEditModal">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered animate__animated animate__zoomIn">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Tag Edit</h4>

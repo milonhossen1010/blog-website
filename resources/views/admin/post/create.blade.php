@@ -22,37 +22,46 @@
                     <div class="card-body">
 
                         <div class="row">
-                            <div class=" col-12 col-md-8 offset-md-2 col-lg-6 offset-lg-3">
+                            <div class=" col-12 col-md-8  col-lg-12 ">
 
-                                <form action="{{ route('post.store') }}" method="POST">
+                                <form class="dropzone" action="{{ route('post.store') }}" enctype="multipart/form-data" method="POST" autocomplete="off">
                                     @csrf
-                                    @include('inc.validation')
                                     <div class="form-group">
                                         <label for="name">Post Title</label>
-                                        <input name="title" type="text" class="form-control" placeholder="Enter Name">
+                                        <input value="{{ old('title') }}" name="title" type="text" class="form-control"
+                                            placeholder="Enter Name">
                                     </div>
                                     <div class="form-group">
                                         <label>Categories</label>
-                                        <select class="select-category form-control" name="categories[]" multiple="multiple">
+                                        <select class="select-category form-control" name="categories[]"
+                                            multiple="multiple">
                                             @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group " >
+                                    <div class="form-group ">
                                         <label>Tags</label>
                                         <select class="form-control select-tag" name="tags[]" multiple="multiple">
-                                          
-                                          @foreach ($tags as $tag)
-                                          <option value="{{ $tag->id }}">{{ $tag->name }}</option> 
-                                          @endforeach
-                                            
+
+                                            @foreach ($tags as $tag)
+                                            <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                            @endforeach
+
                                         </select>
-                                      </div>
+                                    </div>
+
+                                    <div class=" form-group">
+                                        <label for="upload-img">
+                                            <span>Feature image</span>
+                                        </label>
+                                        <input class="dropify" style="display: block" type="file" name="image" id="upload-img">
+                                    </div>
+
                                     <div class="form-group">
                                         <label for="description">Description</label>
-                                        <textarea name="description" class="form-control" id="description"
-                                            placeholder="Description" rows="4"></textarea>
+                                        <textarea name="description" class="form-control" id="summernote"
+                                            placeholder="Description" rows="4">{{ old('description') }}</textarea>
 
                                     </div>
 
@@ -78,29 +87,65 @@
 @endsection
 
 @section('style')
-    <link rel="stylesheet" href="{{ asset('admin/css/select2.min.css') }}">
-    <style>
-        .select2-container .select2-search--inline .select2-search__field {height: 24px !important;}
-    </style>
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('admin/css/select2.min.css') }}">
+<!-- Dropify -->
+<link rel="stylesheet" href="{{ asset('admin/css/dropify.min.css') }}">
+<!-- Summernote css -->
+<link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css') }}">
+
+<style>
+    .select2-container .select2-search--inline .select2-search__field {
+        height: 24px !important;
+    }
+
+</style>
 @endsection
 
 @section('script')
+<!-- Select2 js -->
 <script src="{{ asset('admin/js/select2.min.js') }}"></script>
-    <script>
-        $(document).ready(function () {
-            //Select category function
-            $('.select-category').select2({
-                placeholder: 'Select category',
-                theme: "classic", 
-                allowClear: true
-            });
+<!-- Dropify js -->
+<script src="{{ asset('admin/js/dropify.min.js') }}"></script>
+<!-- Summernote js -->
+<script src="{{ asset('admin/plugins/summernote/summernote-bs4.min.js') }}"></script>
 
-            //Select tag function
-            $('.select-tag').select2({
-                placeholder: 'Select tag',
-                theme: "classic", 
+<script>
+    $(document).ready(function () {
+        //Select category function
+        $('.select-category').select2({
+            placeholder: 'Select category',
+            theme: "classic",
+            allowClear: true
+        });
+
+        //Select tag function
+        $('.select-tag').select2({
+            placeholder: 'Select tag',
+            theme: "classic",
+        });
+
+        //Summernote code
+        $(document).ready(function () {
+            $('#summernote').summernote({
+                placeholder: 'Write post description...',
+                height: 200,
             });
         });
 
-    </script>
+
+
+$('.dropify').dropify({
+    messages: {
+        'default': 'Drag and drop a file here or click',
+        'replace': 'Drag and drop or click to replace',
+        'remove':  'Remove',
+        'error':   'Ooops, something wrong happended.'
+    }
+});
+        
+
+    });
+
+</script>
 @endsection
