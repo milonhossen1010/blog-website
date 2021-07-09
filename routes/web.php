@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
- 
+use App\Http\Controllers\FrontendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,28 +19,13 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('website.home');
-});
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
-Route::get('/category', function () {
-    return view('website.category');
-});
-
-Route::get('/about', function () {
-    return view('website.about');
-});
-
-
-Route::get('/contact', function () {
-    return view('website.contact');
-});
-
+Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
+Route::get('/blog', [FrontendController::class, 'post'])->name('frontend.post'); 
  
 
 // Admin panel route

@@ -69,7 +69,7 @@ class PostController extends Controller
         ]);
 
         $post->categories()->sync($request->categories);
-        $post->tags()->sync($request->categories);
+        $post->tags()->sync($request->tags);
 
         return redirect()->back()->with('success','Post added successful!'); 
     }
