@@ -24,7 +24,7 @@ class FrontendController extends Controller
      */
     public function post()
     {
-        $posts = Post::paginate(2)->latest();
+        $posts = Post::with('categories','tags')->latest()->paginate(9);
         return view('frontend.post', compact('posts'));
     }
 }
