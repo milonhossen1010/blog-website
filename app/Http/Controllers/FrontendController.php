@@ -13,7 +13,7 @@ class FrontendController extends Controller
      * @return void
      */
     public function index(){
-        $posts = Post::with('categories')->latest()->paginate(4);
+        $posts = Post::with('categories')->take(8)->latest()->get();
         return view('frontend.home', compact('posts'));
     }
 

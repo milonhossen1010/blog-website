@@ -7,8 +7,11 @@
                 <div class="swiper-full-screen swiper-container width-100">
                     <div class="swiper-wrapper">
 
+                    @foreach ($posts as $post)
+                        
+                    
                         <!-- start slider item -->
-                        <div class="swiper-slide cover-background" style="background-image:url('{{asset('frontend')}}/images/blog-slider-img5.jpg')">
+                        <div class="swiper-slide cover-background" style="background-image:url('{{ $post->image }}')">
                             <div class="opacity-extra-medium bg-extra-dark-gray"></div>
                             <div class="container position-relative one-fourth-screen sm-height-400px">
                                 <div class="slider-typography text-center">
@@ -16,8 +19,13 @@
                                         <div class="slider-text-middle">
                                             <div class="col-12 col-lg-6 col-md-8 mx-auto slide-content">
                                                 <div class="padding-50px-all sm-padding-30px-all bg-black-opacity">
-                                                    <a href="blog-grid.html" class="text-medium-gray text-extra-small text-uppercase alt-font font-weight-600 margin-10px-bottom d-inline-block">Branding and Identity</a>
-                                                    <h4><a href="blog-post-layout-01.html" class="font-weight-600 text-white-2 alt-font">Everything you can imagine is real</a></h4>
+                                                   
+                                                    @foreach($post->categories as $category)
+                                                    <a href="blog-grid.html" class="text-medium-gray text-extra-small text-uppercase alt-font font-weight-600 margin-10px-bottom d-inline-block">
+                                                        {{$category->name}}
+                                                    </a>
+                                                    @endforeach
+                                                    <h4><a href="blog-post-layout-01.html" class="font-weight-600 text-white-2 alt-font">{{$post->title}}</a></h4>
                                                     <a class="btn btn-very-small btn-transparent-white" href="blog-post-layout-01.html">Continue Reading</a>
                                                 </div>
                                             </div>
@@ -27,46 +35,10 @@
                             </div>
                         </div>
                         <!-- end slider item -->
-                        <!-- start slider item -->
-                        <div class="swiper-slide cover-background" style="background-image:url('{{asset('frontend')}}/images/blog-slider-img6.jpg')">
-                            <div class="opacity-extra-medium bg-extra-dark-gray"></div>
-                            <div class="container position-relative one-fourth-screen sm-height-400px">
-                                <div class="slider-typography text-center">
-                                    <div class="slider-text-middle-main">
-                                        <div class="slider-text-middle">
-                                            <div class="col-12 col-lg-6 col-md-8 mx-auto slide-content">
-                                                <div class="padding-50px-all sm-padding-30px-all bg-black-opacity">
-                                                    <a href="blog-grid.html" class="text-medium-gray text-extra-small text-uppercase alt-font font-weight-600 margin-10px-bottom d-inline-block">Branding and Identity</a>
-                                                    <h4><a href="blog-post-layout-02.html" class="font-weight-600 text-white-2 alt-font">Young pretty girl posing in the street</a></h4>
-                                                    <a class="btn btn-very-small btn-transparent-white" href="blog-post-layout-02.html">Continue Reading</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end slider item -->
-                        <!-- start slider item -->
-                        <div class="swiper-slide cover-background" style="background-image:url('{{asset('frontend')}}/images/blog-slider-img7.jpg')">
-                            <div class="opacity-extra-medium bg-extra-dark-gray"></div>
-                            <div class="container position-relative one-fourth-screen sm-height-400px">
-                                <div class="slider-typography text-center">
-                                    <div class="slider-text-middle-main">
-                                        <div class="slider-text-middle">
-                                            <div class="col-12 col-lg-6 col-md-8 mx-auto slide-content">
-                                                <div class="padding-50px-all sm-padding-30px-all bg-black-opacity">
-                                                    <a href="blog-grid.html" class="text-medium-gray text-extra-small text-uppercase alt-font font-weight-600 margin-10px-bottom d-inline-block">Branding and Identity</a>
-                                                    <h4><a href="blog-post-layout-03.html" class="font-weight-600 text-white-2 alt-font">Do one thing every day that scares you</a></h4>
-                                                    <a class="btn btn-very-small btn-transparent-white" href="blog-post-layout-03.html">Continue Reading</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end slider item -->
+
+                        @endforeach
+                    
+                        
                     </div>
                     <!-- Add Pagination -->
                     <div class="swiper-pagination swiper-pagination-white swiper-full-screen-pagination"></div>
@@ -171,16 +143,8 @@
                         <!-- start slider pagination -->
                         <div class="col-12 text-center margin-100px-top md-margin-50px-top wow fadeInUp">
                             <div class="pagination text-small text-uppercase text-extra-dark-gray">
-                                {{ $posts->links('frontend.pagination.pagination') }}
-                                {{-- <ul class="mx-auto">
-
-                                   
-                                    <li><a href="#"><i class="fas fa-long-arrow-alt-left margin-5px-right d-none d-md-inline-block"></i> Prev</a></li>
-                                    <li class="active"><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">Next <i class="fas fa-long-arrow-alt-right margin-5px-left d-none d-md-inline-block"></i></a></li>
-                                </ul> --}}
+                                {{-- {{ $posts->links('frontend.pagination.pagination') }} --}}
+                                
                             </div>
                         </div>
                         <!-- end slider pagination -->

@@ -62,7 +62,7 @@ class PostController extends Controller
 
         $post = Post::create([
             'title'         =>  $request->title,
-            'slug'          =>   Str::slug($request->title),
+            'slug'          =>   str_replace(' ', '-', $request->title),
             'description'   =>  $request->description,
             'user_id'       =>  Auth::user()->id,
             'image'         =>  '/storage/images/post/'. $imageNewName,
@@ -93,7 +93,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('admin.post.edit', compact('post','categories','tags'));
     }
 
     /**
@@ -105,7 +107,33 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title'         =>  "required|unique:posts,title,$post->id",
+            'categories'    =>  "required",
+            'tags'          =>  "required",
+            'description'   =>  "required",
+        ]);
+        if($request->hasFile('image')){
+            //Old image delete
+            if(file_exists(public_path($post->image))){
+                unlink(public_path($post->image));
+            }
+            //Image upload function
+            $image = $request->file('image');
+            $image_name = time(). '.' . $image->getClientOriginalExtension();
+            
+            $image->move(public_path('storage/images/post'), $image_name);
+            $post->image= '/storage/images/post/' .$image_name;
+            
+        }
+        $post->title          = $request->title;
+        $post->slug           = str_replace(' ','-', $request->title);
+        $post->description    = $request->description;
+        $post->categories()->sync($request->categories);
+        $post->tags()->sync($request->tags);
+        $post->update();
+
+        return redirect()->back()->with('success', 'Post update successful!');
     }
 
     /**

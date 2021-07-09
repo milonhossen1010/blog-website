@@ -60,7 +60,7 @@
                                           </div>
                                     </td>
                                     <td class=" d-flex">
-                                        <a @click="editFunction(post.id, $event)" class="btn btn-primary btn-sm mr-1" href="#"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-primary btn-sm mr-1" :href="'/admin/post/'+post.id+'/edit'" ><i class="fa fa-edit"></i></a>
                                         <a @click="deletePost(post.id, $event)" class="btn btn-danger btn-sm mr-1" href="#"><i class="fa fa-trash"></i></a>
                                         
 
@@ -88,79 +88,6 @@
 </div>
 
 
-<!-- /.modal -->
-
-<div class="modal fade2 " id="postEditModal">
-    <div  class="modal-dialog modal-xl modal-dialog-centered animate__animated animate__zoomIn">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Extra Large Modal</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-            <div class="row">
-                <div class=" col-12 col-md-8  col-lg-12 ">
-
-                    <form class="dropzone" action="{{ route('post.store') }}" enctype="multipart/form-data" method="POST" autocomplete="off">
-                        @csrf
-                        <div class="form-group">
-                            <label for="name">Post Title</label>
-                            <input value="{{ old('title') }}" name="title" type="text" class="form-control"
-                                placeholder="Enter Name">
-                        </div>
-                        <div class="form-group">
-                            <label>Categories</label>
-                            <select class="select-category form-control" name="categories[]"
-                                multiple="multiple">
-                                @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="form-group ">
-                            <label>Tags</label>
-                            <select class="form-control select-tag" name="tags[]" multiple="multiple">
-
-                                @foreach ($tags as $tag)
-                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                                @endforeach
-
-                            </select>
-                        </div>
-
-                        <div class=" form-group">
-                            <label for="upload-img">
-                                <span>Feature image</span>
-                            </label>
-                            <input class="dropify" style="display: block" type="file" name="image" id="upload-img">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="description">Description</label>
-                            <textarea name="description" class="form-control" id="summernote"
-                                placeholder="Description" rows="4">{{ old('description') }}</textarea>
-
-                        </div>
-
-                        <!-- /.card-body -->
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
-
- 
 @endsection
 
 
@@ -175,6 +102,9 @@
 <style>
     .select2-container .select2-search--inline .select2-search__field {
         height: 24px !important;
+    }
+    .select2-container {
+        width: 100% !important;
     }
 
 </style>
@@ -195,7 +125,7 @@
             placeholder: 'Select category',
             theme: "classic",
             allowClear: true
-        });
+        }).val([1,4]).trigger('change');
 
         //Select tag function
         $('.select-tag').select2({

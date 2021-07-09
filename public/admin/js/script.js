@@ -18,13 +18,21 @@ $(document).ready(function () {
             category: {
                 name: '',
                 edit: {
+                    id: '',
                     name: '',
-                    id: ''
                 },
                 all: []
             },
             posts: {
-                all: []
+                all: [],
+                edit: {
+                    id: '',
+                    title: '',
+                    categories: '',
+                    user_id: '',
+                    image: '',
+                    description: '',
+                },
             }
 
         },
@@ -231,12 +239,18 @@ $(document).ready(function () {
             editFunction: function(id, event){
                 event.preventDefault();
                 $("#postEditModal").modal("show");
-                // function afterModalTransition(e) {
-                //     e.setAttribute("style", "display: none !important;");
-                //   }
-                //   $('#postEditModal').on('hide.bs.modal', function (e) {
-                //       setTimeout( () => afterModalTransition(this), 200);
-                //   })
+                axios.get(`/admin/post/${id}/edit`).then((response)=> {
+                    root.posts.edit.id=response.data.id;
+                    root.posts.edit.title=response.data.title;
+                    root.posts.edit.image=response.data.image;
+                    root.posts.edit.categories=response.data.categories;
+                    root.posts.edit.user_id=response.data.user_id;
+                    root.posts.edit.description=response.data.description;
+                    // $(' img').attr('src', response.data.image);
+                    $('.dropify-preview').show();
+                    $(".dropify-render").html(`<img src="${response.data.image}">`);
+                });
+               
             }
 
         },
