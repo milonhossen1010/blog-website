@@ -43,9 +43,7 @@
         <link rel="stylesheet" href="{{ asset('frontend') }}/css/style.css" />
         <!-- responsive css -->
         <link rel="stylesheet" href="{{ asset('frontend') }}/css/responsive.css" />
-        <!--[if IE]>
-            <script src="js/html5shiv.js"></script>
-        <![endif]-->
+        @yield('style')
     </head>
     <body>
         <!-- start header -->
@@ -282,6 +280,7 @@
         <script src="{{asset('admin')}}/js/vue.js"></script>
         <script src="{{asset('admin')}}/js/vue-router.js"></script>
         <script type="text/javascript" src="{{ asset('frontend') }}/js/script.js"></script>
+        @yield('script')
     </body>
 
 </html>

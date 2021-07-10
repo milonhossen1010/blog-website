@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthManageController;
 use Illuminate\Routing\RouteGroup;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,8 @@ Route::get('/blog', [FrontendController::class, 'post'])->name('frontend.post');
 Route::get('/blog/{slug}', [FrontendController::class, 'singlePost'])->name('frontend.post.single'); 
 Route::get('/404', [FrontendController::class, 'notFound'])->name('frontend.notfound'); 
  
+//AuthManage
+Route::get('auth-manage', [AuthManageController::class, 'check']);
 
 // Admin panel route
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){

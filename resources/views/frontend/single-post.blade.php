@@ -1,5 +1,5 @@
 @extends('frontend.app')
-@section('title') 
+@section('title')
 {{ $post->title }}
 @endsection
 @section('main')
@@ -19,7 +19,8 @@
                 class="col-xl-4 col-md-6 alt-font breadcrumb justify-content-center justify-content-md-end text-small sm-margin-10px-top">
                 <!-- breadcrumb -->
                 <ul class="text-center text-md-left text-uppercase">
-                    <li><a href="javaSccript:void()" class="text-dark-gray">{{ date('d F Y', strtotime($post->created_at)) }}</a></li>
+                    <li><a href="javaSccript:void()"
+                            class="text-dark-gray">{{ date('d F Y', strtotime($post->created_at)) }}</a></li>
                     <li><span class="text-dark-gray">by <a
                                 href="{{ $post->user->name }}">{{ $post->user->name }}</a></span></li>
                     <li class="text-dark-gray">
@@ -118,13 +119,15 @@
                             </div>
                             <div class="post-details">
                                 <span
-                                    class="post-author text-extra-small text-medium-gray text-uppercase d-block margin-10px-bottom sm-margin-5px-bottom">{{ date('d F Y', strtotime($recent_post->created_at)) }} | by <a href="#" class="text-medium-gray">{{ $recent_post->user->name }}</a></span>
+                                    class="post-author text-extra-small text-medium-gray text-uppercase d-block margin-10px-bottom sm-margin-5px-bottom">{{ date('d F Y', strtotime($recent_post->created_at)) }}
+                                    | by <a href="#" class="text-medium-gray">{{ $recent_post->user->name }}</a></span>
                                 <a href="blog-post-layout-01.html"
                                     class="post-title text-medium text-extra-dark-gray width-90 d-block md-width-100">{{ $recent_post->title }}</a>
                                 <div
                                     class="separator-line-horrizontal-full bg-medium-light-gray margin-20px-tb md-margin-15px-tb">
                                 </div>
-                                <p class="width-90 sm-width-100">{!! Str::limit($recent_post->description, 90, '...') !!}</p>
+                                <p class="width-90 sm-width-100">{!! Str::limit($recent_post->description, 90, '...')
+                                    !!}</p>
                             </div>
                         </div>
                     </div>
@@ -220,10 +223,10 @@
                     <div class="divider-full bg-medium-light-gray"></div>
                 </div>
 
-                @guest
-                <p >Place <a href="{{ route('login') }}" class=" text-danger">login</a> first before comment.</p>
-                @else
-                <div class="col-12 d-flex flex-wrap p-0">
+
+
+
+                <div v-if="auth_check" class="col-12 d-flex flex-wrap p-0">
                     <div class="col-12 mx-auto text-center margin-80px-tb md-margin-50px-tb sm-margin-30px-tb">
                         <div class="position-relative overflow-hidden width-100">
                             <span
@@ -231,15 +234,8 @@
                                 A Comments</span>
                         </div>
                     </div>
-                    <div class="col-12 col-lg-4">
-                        <input type="text" placeholder="Name *" class="medium-input">
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <input type="text" placeholder="E-mail *" class="medium-input">
-                    </div>
-                    <div class="col-12 col-lg-4">
-                        <input type="url" placeholder="Website" class="medium-input">
-                    </div>
+                    
+                
                     <div class="col-12">
                         <textarea placeholder="Enter your comment here.." rows="8" class="medium-textarea"></textarea>
                     </div>
@@ -247,11 +243,13 @@
                         <button class="btn btn-dark-gray btn-small margin-15px-top" type="submit">Send message</button>
                     </div>
                 </div>
-                @endguest
+                <p v-else class=" text-center">Place <a href="#" @click="loginPopupShow($event)"
+                        class=" text-danger">login</a> first before comment.</p>
+
 
 
             </main>
-         
+
             @include('frontend.partials.sidebar')
 
         </div>
@@ -259,4 +257,218 @@
 </section>
 <!-- end post content section -->
 
+
+<!-- Modal structure -->
+<div class="modal fade" id="loginPopup">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" style="font-size: 18px;text-transform: uppercase;">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="login-box card-body">
+                <div class="lb-header">
+                    <a href="#" class="active" id="login-box-link">Login</a>
+                    <a href="#" id="signup-box-link">Sign Up</a>
+                </div>
+                
+                <form class="email-login" @submit.prevent="login" method="POST" action="{{ route('login') }}">
+                    <p v-if="mess" v-html="mess" class=" alert alert-danger"></p>
+                    @csrf
+                    <div class="u-form-group">
+                        <input v-model="form.email" type="email" name="email" placeholder="Email" />
+                    </div>
+                    <div class="u-form-group">
+                        <input v-model="form.password" type="password" name="password" placeholder="Password" />
+                    </div>
+                    <div class="u-form-group">
+                        <button type="submit"  class="btn btn-small btn-dark-gray lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Log in</button>
+                    </div>
+                    {{-- <div class="u-form-group">
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div> --}}
+                </form>
+                <form class="email-signup">
+                    <div class="u-form-group">
+                        <input type="email" placeholder="Email" />
+                    </div>
+                    <div class="u-form-group">
+                        <input type="password" placeholder="Password" />
+                    </div>
+                    <div class="u-form-group">
+                        <input type="password" placeholder="Confirm Password" />
+                    </div>
+                    <div class="u-form-group">
+                        <button class="btn btn-small btn-dark-gray lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Sign Up</button>
+                    </div>
+                </form>
+            </div>
+          
+            {{-- <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div> --}}
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+@endsection
+
+@section('style')
+<style>
+    .login-box {
+        margin: 10px auto;
+        width: 500px;
+    }
+    .login-box *{
+        font-family: 'Montserrat', sans-serif !important;
+    }
+
+    .lb-header {
+        position: relative;
+        color: #00415d;
+        margin: 5px 5px 10px 5px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #eee;
+        text-align: center;
+        height: 28px;
+    }
+
+    .lb-header a {
+        margin: 0 25px;
+        padding: 0 20px;
+        text-decoration: none;
+        color: #666;
+        font-weight: bold;
+        font-size: 15px;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
+        text-transform: uppercase;
+    }
+
+    .lb-header .active {
+        color: #ff214f; 
+    }
+
+    .social-login {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: auto;
+        padding: 10px 0 15px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .social-login a {
+        position: relative;
+        float: left;
+        width: calc(40% - 8px);
+        text-decoration: none;
+        color: #fff;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        padding: 12px;
+        border-radius: 2px;
+        font-size: 12px;
+        text-transform: uppercase;
+        margin: 0 3%;
+        text-align: center;
+    }
+
+    .social-login a i {
+        position: relative;
+        float: left;
+        width: 20px;
+        top: 2px;
+    }
+
+    .social-login a:first-child {
+        background-color: #49639F;
+    }
+
+    .social-login a:last-child {
+        background-color: #DF4A32;
+    }
+
+    .email-login,
+    .email-signup {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: auto;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .u-form-group {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .u-form-group input{
+        width: 90%;
+        height: 45px;
+        outline: none;
+        border: 1px solid #ddd;
+        padding: 0 10px;
+        border-radius: 2px;
+        color: #333;
+        font-size: 0.8rem;
+        -webkit-transition: all 0.1s linear;
+        -moz-transition: all 0.1s linear;
+        transition: all 0.1s linear;
+    }
+
+    .u-form-group input:focus {
+        border-color: #358efb;
+    }
+
+    /* .u-form-group button {
+        width: 50%;
+        background-color: #1CB94E;
+        border: none;
+        outline: none;
+        color: #fff;
+        font-size: 14px;
+        font-weight: normal;
+        padding: 14px 0;
+        border-radius: 2px;
+        text-transform: uppercase;
+    } */
+
+    .forgot-password {
+        width: 50%;
+        text-align: left;
+        text-decoration: underline;
+        color: #888;
+        font-size: 0.75rem;
+    }
+
+</style>
+@endsection
+
+@section('script')
+<script>
+    $(".email-signup").hide();
+    $("#signup-box-link").click(function (e) {
+        e.preventDefault();
+        $(".email-login").fadeOut(100);
+        $(".email-signup").delay(100).fadeIn(100);
+        $("#login-box-link").removeClass("active");
+        $("#signup-box-link").addClass("active");
+    });
+    $("#login-box-link").click(function (e) {
+        e.preventDefault();
+        $(".email-login").delay(100).fadeIn(100);;
+        $(".email-signup").fadeOut(100);
+        $("#login-box-link").addClass("active");
+        $("#signup-box-link").removeClass("active");
+    });
+
+</script>
 @endsection
