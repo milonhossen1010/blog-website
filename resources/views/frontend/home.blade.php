@@ -1,8 +1,9 @@
 @extends('frontend.app')
+@section('title', 'Home')
 
 @section('main')
          <!-- start blog slider section -->
-         <section class="wow fadeIn half-section p-0 top-space">
+         <section class="wow fadeIn half-section p-0 top-space" >
             <div class="container-fluid padding-30px-lr sm-padding-15px-lr">
                 <div class="swiper-full-screen swiper-container width-100">
                     <div class="swiper-wrapper">

@@ -1,4 +1,5 @@
 @extends('frontend.app')
+@section('title', 'Our Blog')
 @section('main')
 <!-- start page title section -->
 <section class="wow fadeIn parallax" data-stellar-background-ratio="0.5"
@@ -19,49 +20,69 @@
 </section>
 <!-- end page title section -->
 <!-- start post content section -->
-<section class="wow fadeIn">
+<section>
     <div class="container">
-        <div class="row blog-post-style4">
-            <div class="col-12 px-3 p-md-0">
-                <ul class="blog-grid blog-3col gutter-large">
-                    <li class="grid-sizer"></li>
+        <div class="row">
+            <main class="col-12 col-lg-9 right-sidebar md-margin-60px-bottom sm-margin-40px-bottom md-padding-15px-lr">
 
-                    @foreach ($posts as $post)
-                    <!-- start post item -->
-                    <li class="grid-item wow fadeInUp">
-                        <figure>
-                            <div class="blog-img bg-extra-dark-gray">
-                                <a href="blog-post-layout-03.html"><img src="{{ $post->image }}" alt=""></a>
+                @foreach ($posts as $post)
+                <!-- start post item -->
+                <div
+                    class="blog-post-content d-flex align-items-center flex-wrap margin-60px-bottom padding-60px-bottom border-bottom border-color-extra-light-gray md-margin-30px-bottom md-padding-30px-bottom text-center text-md-left md-no-border">
+                    <div
+                        class="col-12 col-lg-5 blog-image p-0 md-margin-30px-bottom sm-margin-20px-bottom margin-45px-right md-no-margin-right">
+                        <a href="{{ route('frontend.post.single', $post->slug) }}"><img src="{{ $post->image }}" alt="" data-no-retina=""></a>
+                    </div>
+                    <div class="col-12 col-lg-6 blog-text p-0">
+                        <div class="content margin-20px-bottom md-no-padding-left">
+                            <a href="{{ route('frontend.post.single', $post->slug) }}"
+                                class="text-extra-dark-gray margin-5px-bottom alt-font text-extra-large font-weight-600 d-inline-block">{{ $post->title }}</a>
+                            <div class="text-medium-gray text-extra-small margin-15px-bottom text-uppercase alt-font">
+                                <span>By <a href="blog-grid.html"
+                                        class="text-medium-gray">{{ $post->user->name }}</a></span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<span>
+                                    {{ date('d M, Y', strtotime($post->created_at)) }}</span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+
+                                @foreach ($post->categories as $category)
+                                <a href="blog-grid.html" class="text-medium-gray">
+                                    {{ $category->name }}
+                                </a>
+                                @endforeach
+
                             </div>
-                            <figcaption>
-                                <div class="portfolio-hover-main text-left">
-                                    <div class="blog-hover-box align-bottom">
-                                        <span
-                                            class="post-author text-extra-small text-medium-gray text-uppercase d-block margin-5px-bottom sm-margin-5px-bottom">{{ date('d M, Y', strtotime($post->created_at)) }} <a href="blog-classic.html"
-                                                class="text-medium-gray"> {{ $post->user->name }}</a></span>
-                                        <h6 class="alt-font d-block text-white-2 font-weight-600 mb-0"><a
-                                                href="blog-post-layout-03.html"
-                                                class="text-white-2 text-deep-pink-hover">{{ Str::limit($post->title, 20, '...')}}</a>
-                                        </h6>
-                                        <p class="text-medium-gray margin-10px-top blog-hover-text">
-                                            {!! Str::limit($post->description, 50, '...') !!} 
-                                        </p>
-                                    </div>
-                                </div>
-                            </figcaption>
-                        </figure>
-                    </li>
-                    <!-- end post item -->
-                    @endforeach
-                </ul>
+                            <p class="m-0 width-95">{!! Str::limit($post->description, 100, '...') !!}</p>
+                        </div>
+                        <a class="btn btn-very-small btn-dark-gray text-uppercase"
+                            href="{{ route('frontend.post.single', $post->slug) }}">Continue Reading</a>
+                    </div>
+                </div>
+                <!-- end post item -->
+                @endforeach
+
+
                 <!-- start pagination -->
-                <div class=" text-center margin-100px-top md-margin-50px-top wow fadeInUp">
+                <div class="col-12 text-center margin-100px-top md-margin-50px-top position-relative wow fadeInUp"
+                    style="visibility: hidden; animation-name: none;">
                     <div class="pagination text-small text-uppercase text-extra-dark-gray">
-                        {{ $posts->links('frontend.partials.pagination') }}
+                        <ul class="mx-auto">
+                            <li><a href="#"><i
+                                        class="fas fa-long-arrow-alt-left margin-5px-right d-none d-md-inline-block"></i>
+                                    Prev</a></li>
+                            <li class="active"><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">Next <i
+                                        class="fas fa-long-arrow-alt-right margin-5px-left d-none d-md-inline-block"></i></a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <!-- end pagination -->
-            </div>
+            </main>
+
+
+            @include('frontend.partials.sidebar')
+
+
         </div>
     </div>
 </section>

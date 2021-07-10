@@ -3,7 +3,7 @@
 
 <head>
         <!-- title -->
-        <title>POFO – Creative Agency, Corporate and Portfolio Multi-purpose Template</title>
+        <title> @yield('title')</title>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1" />
@@ -49,13 +49,32 @@
     </head>
     <body>
         <!-- start header -->
-        <header>
+        <header >
+            @php
+                $route = Route::current()->getname();
+            @endphp
             <!-- start navigation -->
-            <nav class="navbar navbar-default bootsnav background-white header-light navbar-top navbar-expand-lg">
+            <nav class="navbar navbar-default bootsnav navbar-top header-dark background-transparent nav-box-width navbar-expand-lg on no-full
+            {{ ($route=='frontend.post.single' || $route == 'frontend.index')? 'dark-link' : 'white-link' }} ">
                 <div class="container nav-header-container">
                     <!-- start logo -->
                     <div class="col-auto pl-lg-0">
-                        <a href="index.html" title="Pofo" class="logo"><img src="{{asset('frontend')}}/images/logo.png" data-rjs="images/logo@2x.png" class="logo-dark default" alt="Pofo"><img src="{{asset('frontend')}}/images/logo-white.png" data-rjs="images/logo-white@2x.png" alt="Pofo" class="logo-light"></a>
+
+                        @if ($route=='frontend.index' || $route == 'frontend.post.single')
+
+                        <a href="{{ route('frontend.index') }}" title="Pofo" class="logo">
+                            <img src="{{asset('frontend')}}/images/logo.png" data-rjs="images/logo@2x.png" class="logo-dark default" alt="Pofo">
+                            <img src="{{asset('frontend')}}/images/logo-white.png" data-rjs="images/logo-white@2x.png" alt="Pofo" class="logo-light">
+                         </a>
+                        @else
+
+                        <a href="{{ route('frontend.index') }}" title="Pofo" class="logo">
+                            <img src="{{asset('frontend')}}/images/logo-white.png" data-rjs="images/logo-white.png" class="logo-dark default" alt="Pofo">
+                            <img src="{{asset('frontend')}}/images/logo-white.png" data-rjs="images/logo-white.png" alt="Pofo" class="logo-light">
+                        </a>
+
+                        @endif
+                        
                     </div>
                     <!-- end logo -->
                     <div class="col accordion-menu pr-0 pr-md-3">
@@ -68,10 +87,10 @@
                         <div class="navbar-collapse collapse justify-content-end" id="navbar-collapse-toggle-1">
                             <ul id="accordion" class="nav navbar-nav navbar-left no-margin alt-font text-normal" data-in="fadeIn" data-out="fadeOut">
                                 <!-- start menu item -->
-                                <li><a href="#">Home</a></li>
+                                <li><a href="{{ route('frontend.index') }}">Home</a></li>
                                 <li><a href="#">About</a></li>
                                 <li><a href="#">Service</a></li>
-                                <li><a href="#">Blog</a></li>
+                                <li><a href="{{ route('frontend.post') }}">Blog</a></li>
                                 <li><a href="#">Contact</a></li>
                                 <!-- end menu item -->
                             </ul>
@@ -100,10 +119,12 @@
         </header>
         <!-- end header -->
 
-
-@section('main')
+ <div id="frontend">
+    @section('main')
     
-@show
+    @show
+ </div>
+
    
         <!-- start footer --> 
         <footer class="footer-classic-dark bg-extra-dark-gray padding-five-bottom sm-padding-30px-bottom">
@@ -255,6 +276,12 @@
         <script type="text/javascript" src="{{ asset('frontend') }}/revolution/js/jquery.themepunch.tools.min.js"></script>
         <script type="text/javascript" src="{{ asset('frontend') }}/revolution/js/jquery.themepunch.revolution.min.js"></script>
         <script type="text/javascript" src="{{ asset('frontend') }}/js/main.js"></script>
+        <script type="text/javascript" src="{{ asset('frontend') }}/js/main.js"></script>
+        <!--Vue js code-->
+        <script src="{{asset('admin')}}/js/axios.min.js"></script>
+        <script src="{{asset('admin')}}/js/vue.js"></script>
+        <script src="{{asset('admin')}}/js/vue-router.js"></script>
+        <script type="text/javascript" src="{{ asset('frontend') }}/js/script.js"></script>
     </body>
 
 </html>

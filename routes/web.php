@@ -26,6 +26,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/blog', [FrontendController::class, 'post'])->name('frontend.post'); 
+Route::get('/blog/{slug}', [FrontendController::class, 'singlePost'])->name('frontend.post.single'); 
+Route::get('/404', [FrontendController::class, 'notFound'])->name('frontend.notfound'); 
  
 
 // Admin panel route
