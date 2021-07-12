@@ -24,4 +24,10 @@ class Post extends Model
     public function tags(){
         return $this->belongsToMany('App\Models\Tag')->withTimestamps();
     }
+
+    //Comments attach
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
 }

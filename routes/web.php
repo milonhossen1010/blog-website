@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FrontendController;
 
 /*
@@ -32,6 +33,11 @@ Route::get('/404', [FrontendController::class, 'notFound'])->name('frontend.notf
  
 //AuthManage
 Route::get('auth-manage', [AuthManageController::class, 'check']);
+
+//Comments 
+Route::post('post-comment-index', [CommentController::class, 'index'])->name('comment.index');
+Route::post('post-comment-store', [CommentController::class, 'store'])->name('comment.store');
+Route::post('post-comment-reply-store', [CommentController::class, 'reply'])->name('comment.reply');
 
 // Admin panel route
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){

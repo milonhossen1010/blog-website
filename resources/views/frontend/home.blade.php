@@ -26,8 +26,8 @@
                                                         {{$category->name}}
                                                     </a>
                                                     @endforeach
-                                                    <h4><a href="blog-post-layout-01.html" class="font-weight-600 text-white-2 alt-font">{{$post->title}}</a></h4>
-                                                    <a class="btn btn-very-small btn-transparent-white" href="blog-post-layout-01.html">Continue Reading</a>
+                                                    <h4><a href="{{ route('frontend.post.single', $post->slug) }}" class="font-weight-600 text-white-2 alt-font">{{$post->title}}</a></h4>
+                                                    <a class="btn btn-very-small btn-transparent-white" href="{{ route('frontend.post.single', $post->slug) }}">Continue Reading</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -122,13 +122,13 @@
                             <div class="grid-item col-12 col-md-6 margin-30px-bottom text-center text-md-left wow fadeInUp">
                                 <div class="blog-post bg-light-gray inner-match-height">
                                     <div class="blog-post-images overflow-hidden position-relative">
-                                        <a href="blog-post-layout-01.html">
+                                        <a href="{{ route('frontend.post.single', $post->slug) }}">
                                             <img src="{{ $post->image }}" alt="">
                                             <div class="blog-hover-icon"><span class="text-extra-large font-weight-300">+</span></div>
                                         </a>
                                     </div>
                                     <div class="post-details padding-40px-all md-padding-20px-all">
-                                        <a href="blog-post-layout-01.html" class="alt-font post-title text-medium text-extra-dark-gray width-100 d-block md-width-100 margin-15px-bottom">{{ $post->title }}</a>
+                                        <a href="{{ route('frontend.post.single', $post->slug) }}" class="alt-font post-title text-medium text-extra-dark-gray width-100 d-block md-width-100 margin-15px-bottom">{{ $post->title }}</a>
                                         <p>{!! Str::limit($post->description, 80, '...') !!}</p>
                                         <div class="separator-line-horrizontal-full bg-medium-gray margin-20px-tb"></div>
                                         <div class="author">

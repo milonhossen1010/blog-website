@@ -55,9 +55,9 @@
                                 @foreach ($posts as $post)
                                     <li class="media">
                                         <figure>
-                                            <a href="blog-post-layout-03.html"><img src="{{ $post->image }}" alt=""></a>
+                                            <a href="{{ route('frontend.post.single', $post->slug) }}"><img src="{{ $post->image }}" alt=""></a>
                                         </figure>
-                                        <div class="media-body text-small"><a href="blog-post-layout-03.html" class="text-extra-dark-gray"><span class="d-block margin-5px-bottom">{{ $post->title }}</span></a> <span class="clearfix text-medium-gray text-small">{{ date('d M, Y', strtotime($post->created_at)) }}</span></div>
+                                        <div class="media-body text-small"><a href="{{ route('frontend.post.single', $post->slug) }}" class="text-extra-dark-gray"><span class="d-block margin-5px-bottom">{{ $post->title }}</span></a> <span class="clearfix text-medium-gray text-small">{{ date('d M, Y', strtotime($post->created_at)) }}</span></div>
                                     </li>
                                 @endforeach
                              

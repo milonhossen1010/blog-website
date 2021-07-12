@@ -113,7 +113,7 @@
                         style="visibility: visible; animation-name: fadeIn;">
                         <div class="blog-post blog-post-style1 text-center text-md-left">
                             <div class="blog-post-images overflow-hidden margin-25px-bottom md-margin-20px-bottom">
-                                <a href="blog-post-layout-01.html">
+                                <a href="{{ route('frontend.post.single', $recent_post->slug) }}">
                                     <img src="{{ $recent_post->image }}" alt="" data-no-retina="">
                                 </a>
                             </div>
@@ -121,7 +121,7 @@
                                 <span
                                     class="post-author text-extra-small text-medium-gray text-uppercase d-block margin-10px-bottom sm-margin-5px-bottom">{{ date('d F Y', strtotime($recent_post->created_at)) }}
                                     | by <a href="#" class="text-medium-gray">{{ $recent_post->user->name }}</a></span>
-                                <a href="blog-post-layout-01.html"
+                                <a href="{{ route('frontend.post.single', $recent_post->slug) }}"
                                     class="post-title text-medium text-extra-dark-gray width-90 d-block md-width-100">{{ $recent_post->title }}</a>
                                 <div
                                     class="separator-line-horrizontal-full bg-medium-light-gray margin-20px-tb md-margin-15px-tb">
@@ -145,12 +145,16 @@
                     <div class="width-100 mx-auto text-center margin-80px-tb md-margin-50px-tb sm-margin-30px-tb">
                         <div class="position-relative overflow-hidden width-100">
                             <span
-                                class="text-small text-outside-line-full alt-font font-weight-600 text-uppercase text-extra-dark-gray">10
+                                class="text-small text-outside-line-full alt-font font-weight-600 text-uppercase text-extra-dark-gray"><span
+                                    v-html="all_comments.length"></span>
                                 Comments</span>
                         </div>
                     </div>
+
+
                     <ul class="blog-comment">
-                        <li>
+
+                        <li v-for="comment in all_comments">
                             <div class="d-block d-md-flex  width-100">
                                 <div class="width-110px sm-width-50px text-center sm-margin-10px-bottom">
                                     <img src="{{asset('frontend')}}/images/avtar-02.jpg"
@@ -158,20 +162,46 @@
                                 </div>
                                 <div class="width-100 padding-40px-left last-paragraph-no-margin sm-no-padding-left">
                                     <a href="#"
-                                        class="text-extra-dark-gray text-uppercase alt-font font-weight-600 text-small">Herman
-                                        Miller</a>
-                                    <a href="#comments"
+                                        class="text-extra-dark-gray text-uppercase alt-font font-weight-600 text-small"
+                                        v-html="comment.user.name"></a>
+
+                                    @guest
+                                    <!-- Logout view -->
+                                    <a @click="loginPopupShow($event)" href="#"
                                         class="inner-link btn-reply text-uppercase alt-font text-extra-dark-gray">Reply</a>
-                                    <div class="text-small text-medium-gray text-uppercase margin-10px-bottom">17 july
-                                        2017, 6:05 pm</div>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen
-                                        book. It has survived not only five centuries.</p>
+                                    @else
+                                    <!-- Login view -->
+                                    <a href="#comments" @click.prevent="replyBox(comment.id)"
+                                        class="inner-link btn-reply text-uppercase alt-font text-extra-dark-gray">Reply</a>
+                                    @endguest
+
+
+                                    <div class="text-small text-medium-gray text-uppercase margin-10px-bottom"
+                                        v-html="comment.created_at">
+
+                                    </div>
+                                    <p v-html="comment.comment"> </p>
                                 </div>
                             </div>
+
+
                             <ul class="child-comment">
-                                <li>
+
+                                <div style="display:none" class="col-12  mt-1 pr-0" :id="comment.id">
+                                    <form method="POST" @submit.prevent="commentReplyCreate(comment.id)">
+                                        @csrf
+                                        <textarea v-model="form.reply" placeholder="Enter your comment here.."
+                                            name="comment" rows="4" class="medium-textarea"></textarea>
+                                        <span v-html="reply_mess" v-if="form.reply==0" class=" text-danger"></span>
+
+                                        <div class="col-12 text-right">
+                                            <button class="btn btn-dark-gray btn-small" type="submit">Reply</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+
+                                <li  v-for="rep in all_reply" v-if="comment.id==rep.comment_id">
                                     <div class="d-block d-md-flex  width-100">
                                         <div class="width-110px sm-width-50px text-center sm-margin-10px-bottom">
                                             <img src="{{asset('frontend')}}/images/avtar-01.jpg"
@@ -180,43 +210,25 @@
                                         <div
                                             class="width-100 padding-40px-left last-paragraph-no-margin sm-no-padding-left">
                                             <a href="#"
-                                                class="text-extra-dark-gray text-uppercase alt-font font-weight-600 text-small">Alexander
-                                                Harvard</a>
-                                            <a href="#comments"
-                                                class="inner-link btn-reply text-uppercase alt-font text-extra-dark-gray">Reply</a>
-                                            <div class="text-small text-medium-gray text-uppercase margin-10px-bottom">
-                                                17 july 2017, 6:05 pm</div>
-                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting
-                                                industry. Lorem Ipsum has been the industry's standard dummy text ever
-                                                since the 1500s, when an unknown printer took a galley of type and
-                                                scrambled it to make a type specimen book. It has survived not only five
-                                                centuries.</p>
+                                                class="text-extra-dark-gray text-uppercase alt-font font-weight-600 text-small" v-html="rep.user.name"></a>
+
+                                            <div class="text-small text-medium-gray text-uppercase margin-10px-bottom" v-html="rep.created_at"> </div>
+                                            <p v-html="rep.comment"></p>
                                         </div>
                                     </div>
                                 </li>
+
+
+
+
+
                             </ul>
+
+
                         </li>
-                        <li>
-                            <div class="d-block d-md-flex  width-100">
-                                <div class="width-110px sm-width-50px text-center sm-margin-10px-bottom">
-                                    <img src="{{asset('frontend')}}/images/avtar-04.jpg"
-                                        class="rounded-circle width-85 sm-width-100" alt="" data-no-retina="">
-                                </div>
-                                <div class="width-100 padding-40px-left last-paragraph-no-margin sm-no-padding-left">
-                                    <a href="#"
-                                        class="text-extra-dark-gray text-uppercase alt-font font-weight-600 text-small">Jennifer
-                                        Freeman</a>
-                                    <a href="#comments"
-                                        class="inner-link btn-reply text-uppercase alt-font text-extra-dark-gray">Reply</a>
-                                    <div class="text-small text-medium-gray text-uppercase margin-10px-bottom">17 july
-                                        2017, 6:05 pm</div>
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen
-                                        book. It has survived not only five centuries.</p>
-                                </div>
-                            </div>
-                        </li>
+
+
+
                     </ul>
                 </div>
                 <div class="col-12 margin-eight-top" id="comments">
@@ -227,6 +239,9 @@
 
 
                 <div v-if="auth_check" class="col-12 d-flex flex-wrap p-0">
+
+
+
                     <div class="col-12 mx-auto text-center margin-80px-tb md-margin-50px-tb sm-margin-30px-tb">
                         <div class="position-relative overflow-hidden width-100">
                             <span
@@ -234,17 +249,33 @@
                                 A Comments</span>
                         </div>
                     </div>
-                    
-                
+
+
                     <div class="col-12">
-                        <textarea placeholder="Enter your comment here.." rows="8" class="medium-textarea"></textarea>
+                        <form action="{{ route('comment.store') }}" method="POST"
+                            @submit.prevent="createComment({{ $post->id }})">
+                            @csrf
+                            <textarea v-model="form.comment" placeholder="Enter your comment here.." name="comment"
+                                rows="8" class="medium-textarea"></textarea>
+                            <span v-html="mess" v-if="form.comment==0" class=" text-danger"></span>
+
+                            <div class="col-12 text-right">
+                                <button class="btn btn-dark-gray btn-small " type="submit">Comment</button>
+                            </div>
+
+                        </form>
                     </div>
-                    <div class="col-12 text-center">
-                        <button class="btn btn-dark-gray btn-small margin-15px-top" type="submit">Send message</button>
-                    </div>
+
+
+                    <!--Post id set-->
+                    <input value="{{ $post->id }}" type="hidden" id="post_id">
+
+
+
                 </div>
                 <p v-else class=" text-center">Place <a href="#" @click="loginPopupShow($event)"
-                        class=" text-danger">login</a> first before comment.</p>
+                        class=" text-danger">login</a>
+                    first before comment.</p>
 
 
 
@@ -274,8 +305,8 @@
                     <a href="#" class="active" id="login-box-link">Login</a>
                     <a href="#" id="signup-box-link">Sign Up</a>
                 </div>
-                
-                <form class="email-login" @submit.prevent="login" method="POST" action="{{ route('login') }}">
+
+                <form class="email-login" @submit.prevent="login" method="POST">
                     <p v-if="mess" v-html="mess" class=" alert alert-danger"></p>
                     @csrf
                     <div class="u-form-group">
@@ -285,28 +316,38 @@
                         <input v-model="form.password" type="password" name="password" placeholder="Password" />
                     </div>
                     <div class="u-form-group">
-                        <button type="submit"  class="btn btn-small btn-dark-gray lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Log in</button>
+                        <button type="submit"
+                            class="btn btn-small btn-dark-gray lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Log
+                            in</button>
                     </div>
                     {{-- <div class="u-form-group">
                         <a href="#" class="forgot-password">Forgot password?</a>
                     </div> --}}
                 </form>
-                <form class="email-signup">
+
+                <form method="POST" @submit.prevent="register" class="email-signup">
+                    @csrf
                     <div class="u-form-group">
-                        <input type="email" placeholder="Email" />
+                        <input v-model="form.name" name="name" type="text" placeholder="Name" />
                     </div>
                     <div class="u-form-group">
-                        <input type="password" placeholder="Password" />
+                        <input v-model="form.email" name="email" type="email" placeholder="Email" />
                     </div>
                     <div class="u-form-group">
-                        <input type="password" placeholder="Confirm Password" />
+                        <input v-model="form.password" name="password" type="password" placeholder="Password" />
                     </div>
                     <div class="u-form-group">
-                        <button class="btn btn-small btn-dark-gray lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Sign Up</button>
+                        <input v-model="form.password_confirmation" name="password_confirmation" type="password"
+                            placeholder="Confirm Password" />
+                    </div>
+                    <div class="u-form-group">
+                        <button type="submit"
+                            class="btn btn-small btn-dark-gray lg-margin-15px-bottom d-table d-lg-inline-block md-margin-lr-auto">Sign
+                            Up</button>
                     </div>
                 </form>
             </div>
-          
+
             {{-- <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Save changes</button>
@@ -325,7 +366,8 @@
         margin: 10px auto;
         width: 500px;
     }
-    .login-box *{
+
+    .login-box * {
         font-family: 'Montserrat', sans-serif !important;
     }
 
@@ -353,7 +395,7 @@
     }
 
     .lb-header .active {
-        color: #ff214f; 
+        color: #ff214f;
     }
 
     .social-login {
@@ -410,7 +452,7 @@
         margin-bottom: 10px;
     }
 
-    .u-form-group input{
+    .u-form-group input {
         width: 90%;
         height: 45px;
         outline: none;
