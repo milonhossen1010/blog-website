@@ -22,7 +22,7 @@
                                                 <div class="padding-50px-all sm-padding-30px-all bg-black-opacity">
                                                    
                                                     @foreach($post->categories as $category)
-                                                    <a href="blog-grid.html" class="text-medium-gray text-extra-small text-uppercase alt-font font-weight-600 margin-10px-bottom d-inline-block">
+                                                    <a href="{{ route('frontend.post.search', $category->id ) }}" class="text-medium-gray text-extra-small text-uppercase alt-font font-weight-600 margin-10px-bottom d-inline-block">
                                                         {{$category->name}}
                                                     </a>
                                                     @endforeach
@@ -132,7 +132,7 @@
                                         <p>{!! Str::limit($post->description, 80, '...') !!}</p>
                                         <div class="separator-line-horrizontal-full bg-medium-gray margin-20px-tb"></div>
                                         <div class="author">
-                                            <span class="text-medium-gray text-uppercase text-extra-small d-block d-lg-inline-block md-margin-10px-top">by <a href="blog-masonry.html" class="text-medium-gray">{{$post->user->name}}</a>&nbsp;&nbsp;|&nbsp;&nbsp;{{ date('d M, Y', strtotime($post->created_at)) }}</span>
+                                            <span class="text-medium-gray text-uppercase text-extra-small d-block d-lg-inline-block md-margin-10px-top">by <a href="{{ route('frontend.post.user.search', $post->user->id ) }}" class="text-medium-gray">{{$post->user->name}}</a>&nbsp;&nbsp;|&nbsp;&nbsp;{{ date('d M, Y', strtotime($post->created_at)) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -161,9 +161,5 @@
             </div>
         </section>
         <!-- end blog section -->
-        <style>
-            .w-5 {
-                display: none;
-            }
-        </style>
+    
 @endsection

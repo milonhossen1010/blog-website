@@ -61,14 +61,14 @@
                         @if ($route=='frontend.index' || $route == 'frontend.post.single')
 
                         <a href="{{ route('frontend.index') }}" title="Pofo" class="logo">
-                            <img src="{{asset('frontend')}}/images/logo.png" data-rjs="images/logo@2x.png" class="logo-dark default" alt="Pofo">
-                            <img src="{{asset('frontend')}}/images/logo-white.png" data-rjs="images/logo-white@2x.png" alt="Pofo" class="logo-light">
+                            <img src="{{asset('frontend')}}/images/logo/dark.png" data-rjs="images/logo/dark.png" class="logo-dark default" alt="Pofo">
+                            <img src="{{asset('frontend')}}/images/logo/white.png" data-rjs="images/logo/white.png" alt="Pofo" class="logo-light">
                          </a>
                         @else
 
                         <a href="{{ route('frontend.index') }}" title="Pofo" class="logo">
-                            <img src="{{asset('frontend')}}/images/logo-white.png" data-rjs="images/logo-white.png" class="logo-dark default" alt="Pofo">
-                            <img src="{{asset('frontend')}}/images/logo-white.png" data-rjs="images/logo-white.png" alt="Pofo" class="logo-light">
+                            <img src="{{asset('frontend')}}/images/logo/white.png" data-rjs="images/logo/white.png" class="logo-dark default" alt="Pofo">
+                            <img src="{{asset('frontend')}}/images/logo/white.png" data-rjs="images/logo/white.png" alt="Pofo" class="logo-light">
                         </a>
 
                         @endif

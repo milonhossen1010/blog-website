@@ -16,8 +16,8 @@ class DatabaseSeeder extends Seeder
         //Factory call
         // \App\Models\User::factory(10)->create();
          \App\Models\Post::factory(20)->create();
-         \App\Models\Category::factory(50)->create();
-         \App\Models\Tag::factory(50)->create();
+         \App\Models\Category::factory(10)->create();
+         \App\Models\Tag::factory(10)->create();
 
          //Seeder call
         $this->call([

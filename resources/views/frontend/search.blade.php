@@ -1,5 +1,5 @@
 @extends('frontend.app')
-@section('title', 'Our Blog')
+@section('title', 'Search')
 @section('main')
 <!-- start page title section -->
 <section class="wow fadeIn parallax" data-stellar-background-ratio="0.5"
@@ -10,9 +10,8 @@
             <div
                 class="col-12 d-flex flex-column justify-content-center text-center extra-small-screen page-title-large">
                 <!-- start page title -->
-                <h1 class="text-white-2 alt-font font-weight-600 letter-spacing-minus-1 margin-10px-bottom">Our Latest
-                    Blog</h1>
-                <span class="text-white-2 opacity6 alt-font">Lorem Ipsum is simply dummy text printing</span>
+                <h1 class="text-white-2 alt-font font-weight-600 letter-spacing-minus-1 margin-10px-bottom">{{ $data->name }}</h1>
+                {{-- <span class="text-white-2 opacity6 alt-font">Lorem Ipsum is simply dummy text printing</span> --}}
                 <!-- end page title -->
             </div>
         </div>
@@ -25,7 +24,9 @@
         <div class="row">
             <main class="col-12 col-lg-9 right-sidebar md-margin-60px-bottom sm-margin-40px-bottom md-padding-15px-lr">
 
-                @foreach ($posts as $post)
+                @foreach ($data->posts as $post)
+
+ 
                 <!-- start post item -->
                 <div
                     class="blog-post-content d-flex align-items-center flex-wrap margin-60px-bottom padding-60px-bottom border-bottom border-color-extra-light-gray md-margin-30px-bottom md-padding-30px-bottom text-center text-md-left md-no-border">
@@ -60,11 +61,10 @@
 
 
                 <!-- start pagination -->
-                <div class="col-12 text-center margin-100px-top md-margin-50px-top position-relative wow fadeInUp"
+                {{-- <div class="col-12 text-center margin-100px-top md-margin-50px-top position-relative wow fadeInUp"
                     style="visibility: hidden; animation-name: none;">
                     <div class="pagination text-small text-uppercase text-extra-dark-gray">
-                        {{ $posts->links('frontend.partials.pagination') }}
-                        {{-- <ul class="mx-auto">
+                        <ul class="mx-auto">
                             <li><a href="#"><i
                                         class="fas fa-long-arrow-alt-left margin-5px-right d-none d-md-inline-block"></i>
                                     Prev</a></li>
@@ -74,9 +74,9 @@
                             <li><a href="#">Next <i
                                         class="fas fa-long-arrow-alt-right margin-5px-left d-none d-md-inline-block"></i></a>
                             </li>
-                        </ul> --}}
+                        </ul>
                     </div>
-                </div>
+                </div> --}}
                 <!-- end pagination -->
             </main>
 

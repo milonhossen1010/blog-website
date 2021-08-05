@@ -9,6 +9,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FrontendController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +27,12 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//Frontend 
 Route::get('/', [FrontendController::class, 'index'])->name('frontend.index');
 Route::get('/blog', [FrontendController::class, 'post'])->name('frontend.post'); 
 Route::get('/blog/{slug}', [FrontendController::class, 'singlePost'])->name('frontend.post.single'); 
+Route::get('/search/{id}', [FrontendController::class, 'postSearch'])->name('frontend.post.search'); 
+Route::get('/search/user/{id}', [FrontendController::class, 'userSearch'])->name('frontend.post.user.search'); 
 Route::get('/404', [FrontendController::class, 'notFound'])->name('frontend.notfound'); 
  
 //AuthManage
@@ -62,5 +66,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function(){
     Route::resource('post', PostController::class);
     Route::post('post/showall', [PostController::class, 'showall'])->name('post.showall');
     Route::get('post/status/{post}', [PostController::class, 'status'])->name('post.status');
+
+    //User
+    Route::resource('user', UserController::class);
 
 });

@@ -62,7 +62,8 @@ class PostController extends Controller
 
         $post = Post::create([
             'title'         =>  $request->title,
-            'slug'          =>   str_replace(' ', '-', $request->title),
+            // 'slug'          =>   str_replace(' ', '-', $request->title),
+            'slug'          =>   Str::slug($request->title),
             'description'   =>  $request->description,
             'user_id'       =>  Auth::user()->id,
             'image'         =>  '/storage/images/post/'. $imageNewName,
@@ -93,8 +94,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $categories = Category::all();
-        $tags = Tag::all();
+        $categories = Category::latest()->get();
+        $tags = Tag::latest()->get();
         return view('admin.post.edit', compact('post','categories','tags'));
     }
 
@@ -127,7 +128,7 @@ class PostController extends Controller
             
         }
         $post->title          = $request->title;
-        $post->slug           = str_replace(' ','-', $request->title);
+        $post->slug           = Str::slug($request->title);
         $post->description    = $request->description;
         $post->categories()->sync($request->categories);
         $post->tags()->sync($request->tags);

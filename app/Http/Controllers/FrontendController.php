@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class FrontendController extends Controller
@@ -70,4 +71,36 @@ class FrontendController extends Controller
     public function notFound(){
         return view('frontend.404');
     }
+
+
+    /**
+     * Post search function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function postSearch($id)
+    {
+       $data = Category::find($id);
+      
+       return view('frontend.search', compact('data'));
+    }
+
+    
+    /**
+     * Post user Search  function
+     *
+     * @param [type] $id
+     * @return void
+     */
+    public function userSearch($id)
+    {
+       $data = User::find($id);
+      
+       return view('frontend.search', compact('data'));
+    }
+
+
+
+
 }

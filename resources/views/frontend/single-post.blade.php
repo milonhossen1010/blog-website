@@ -22,11 +22,11 @@
                     <li><a href="javaSccript:void()"
                             class="text-dark-gray">{{ date('d F Y', strtotime($post->created_at)) }}</a></li>
                     <li><span class="text-dark-gray">by <a
-                                href="{{ $post->user->name }}">{{ $post->user->name }}</a></span></li>
+                                href="{{ route('frontend.post.user.search', $post->user->id ) }}">{{ $post->user->name }}</a></span></li>
                     <li class="text-dark-gray">
                         @foreach ($post->categories as $category)
 
-                        <a href="{{ $category->slug }}">{{ $category->id }}</a>
+                        <a href="{{ $category->slug }}">{{ $category->name }}</a>
                         @endforeach
                     </li>
                 </ul>
@@ -81,18 +81,15 @@
                     <div
                         class="d-flex flex-column flex-md-row align-items-center align-items-md-start width-100 border border-color-extra-light-gray padding-50px-all md-padding-30px-all sm-padding-20px-all">
                         <div class="width-150px text-center sm-margin-15px-bottom sm-width-100">
-                            <img src="{{asset('frontend')}}/images/avtar-01.jpg" class="rounded-circle width-100px"
+                            <img src="{{ $post->user->photo }}" class="rounded-circle width-100px"
                                 alt="" data-no-retina="">
                         </div>
                         <div
                             class="width-100 padding-40px-left last-paragraph-no-margin sm-no-padding-left text-center text-md-left">
                             <a href="#"
                                 class="text-extra-dark-gray text-uppercase alt-font font-weight-600 margin-10px-bottom d-inline-block text-small">{{ $post->user->name }}</a>
-                            <p class="md-width-95 sm-width-100">Lorem Ipsum is simply dummy text of the printing and
-                                typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since
-                                the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-                                specimen book. It has survived not only five centuries.</p>
-                            <a href="#" class="btn btn-very-small btn-black margin-20px-top">All author posts</a>
+                            <p class="md-width-95 sm-width-100">{{  $post->user->bio }}</p>
+                            <a href="{{  $post->user->slug }}" class="btn btn-very-small btn-black margin-20px-top">All author posts</a>
                         </div>
                     </div>
                 </div>
@@ -157,23 +154,23 @@
                         <li v-for="comment in all_comments">
                             <div class="d-block d-md-flex  width-100">
                                 <div class="width-110px sm-width-50px text-center sm-margin-10px-bottom">
-                                    <img src="{{asset('frontend')}}/images/avtar-02.jpg"
+                                    <img :src="comment.user.photo"
                                         class="rounded-circle width-85 sm-width-100" alt="" data-no-retina="">
                                 </div>
                                 <div class="width-100 padding-40px-left last-paragraph-no-margin sm-no-padding-left">
-                                    <a href="#"
+                                    <a href="'search/user/'+'comment.user.id'"
                                         class="text-extra-dark-gray text-uppercase alt-font font-weight-600 text-small"
                                         v-html="comment.user.name"></a>
 
-                                    @guest
+                                  
                                     <!-- Logout view -->
-                                    <a @click="loginPopupShow($event)" href="#"
+                                    <a v-if="auth_check==0" @click="loginPopupShow($event)" href="#"
                                         class="inner-link btn-reply text-uppercase alt-font text-extra-dark-gray">Reply</a>
-                                    @else
+                                   
                                     <!-- Login view -->
-                                    <a href="#comments" @click.prevent="replyBox(comment.id)"
+                                    <a v-else href="#comments" @click.prevent="replyBox(comment.id)"
                                         class="inner-link btn-reply text-uppercase alt-font text-extra-dark-gray">Reply</a>
-                                    @endguest
+                                   
 
 
                                     <div class="text-small text-medium-gray text-uppercase margin-10px-bottom"
@@ -201,10 +198,11 @@
                                     </form>
                                 </div>
 
-                                <li  v-for="rep in all_reply" v-if="comment.id==rep.comment_id">
+                                <li style="border-top: 0px solid #ededed;
+                                margin-top: 0px;"  v-for="rep in all_reply" v-if="comment.id==rep.comment_id">
                                     <div class="d-block d-md-flex  width-100">
                                         <div class="width-110px sm-width-50px text-center sm-margin-10px-bottom">
-                                            <img src="{{asset('frontend')}}/images/avtar-01.jpg"
+                                            <img :src="rep.user.photo"
                                                 class="rounded-circle width-85 sm-width-100" alt="" data-no-retina="">
                                         </div>
                                         <div

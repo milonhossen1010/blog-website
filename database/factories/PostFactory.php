@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PostFactory extends Factory
@@ -23,7 +24,7 @@ class PostFactory extends Factory
     {
         return [
             'title'         =>  $this->faker->sentence(5, true),
-            'slug'          =>  str_replace(' ', '-', $this->faker->sentence(5, true)),
+            'slug'          =>  Str::slug($this->faker->sentence(5, true)),
             'image'         => 'https://picsum.photos/id/' . rand(1, 200) . '/600/400',
             'description'   => $this->faker->paragraph(10),
             'user_id'       => 1

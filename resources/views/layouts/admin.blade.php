@@ -219,13 +219,29 @@
             </a>
           </li> 
 
+          <li class="nav-header">My account</li>
+          <li class="nav-item">
+            <a href="{{ route('user.index') }}" class="nav-link">
+              <i class="fas fa-user-circle nav-icon"></i>
+              <p>Profile</p>
+            </a>
+          </li> 
 
+          <li class="nav-item">
+            <a href="{{ route('frontend.index') }}" class="nav-link">
+              <i class="fas fa-eye nav-icon"></i>
+              <p>View site</p>
+            </a>
+          </li> 
+          
           <li class="nav-item">
             <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit()" class="nav-link bg-danger">
               <i class="fas fa-sign-out-alt nav-icon"></i>
               <p>Logout</p>
             </a>
           </li>
+
+
 
         </ul>
       </nav>

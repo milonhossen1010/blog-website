@@ -14,23 +14,25 @@
                     <div class="card-header">
                         <div class=" d-flex justify-content-between align-items-center">
                             <h3 class="card-title">Edit</h3>
-                            <a class="btn btn-primary" href="{{ route('post.index') }}"> <i class="fas fa-long-arrow-alt-left"></i> Back to post</a>
+                            <a class="btn btn-primary" href="{{ route('post.index') }}"> <i
+                                    class="fas fa-long-arrow-alt-left"></i> Back to post</a>
                         </div>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        
+
                         <div class="row">
                             <div class=" col-12 col-md-12  col-lg-12 ">
 
-                                <form class="dropzone" action="{{ route('post.update', $post->id) }}" enctype="multipart/form-data" method="POST" autocomplete="off">
+                                <form class="dropzone" action="{{ route('post.update', $post->id) }}"
+                                    enctype="multipart/form-data" method="POST" autocomplete="off">
                                     @csrf
                                     @method('PUT')
                                     <div class="form-group">
                                         <label for="name">Post Title <span class=" text-danger">*</span></label>
                                         <input value="{{ $post->title }}" name="title" type="text" class="form-control"
                                             placeholder="Enter Name">
-                                            <span class=" text-danger">{{ $errors->first('title') }}</span>
+                                        <span class=" text-danger">{{ $errors->first('title') }}</span>
                                     </div>
                                     <div class="form-group">
                                         <label>Categories <span class=" text-danger">*</span></label>
@@ -44,7 +46,7 @@
                                     </div>
                                     <div class="form-group ">
                                         <label>Tags <span class=" text-danger">*</span></label>
-                                        <select class="form-control select-tag" name="tags[]" multiple="multiple">
+                                        <select class="form-control select-tag js-example-basic-single js-states" name="tags[]" multiple="multiple">
 
                                             @foreach ($tags as $tag)
                                             <option value="{{ $tag->id }}">{{ $tag->name }}</option>
@@ -58,14 +60,15 @@
                                         <label for="upload-img">
                                             <span>Feature image</span>
                                         </label>
-                                        <input class="dropify" style="display: block" type="file" name="image" id="upload-img">
+                                        <input class="dropify" style="display: block" type="file" name="image"
+                                            id="upload-img">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="description">Description <span class=" text-danger">*</span></label>
                                         <textarea name="description" class="form-control" id="summernote"
                                             placeholder="Description" rows="4">{{ $post->description }}</textarea>
-                                            <span class=" text-danger">{{ $errors->first('description') }}</span>
+                                        <span class=" text-danger">{{ $errors->first('description') }}</span>
                                     </div>
 
                                     <!-- /.card-body -->
@@ -100,6 +103,7 @@
 <link rel="stylesheet" href="{{ asset('admin/plugins/summernote/summernote-bs4.min.css') }}">
 
 <style>
+    
     .select2-container .select2-search--inline .select2-search__field {
         height: 24px !important;
     }
@@ -123,8 +127,10 @@
             theme: "classic",
             allowClear: true
         }).val([
-            @foreach ($post->categories as $cat )
-                {{ $cat->id }},
+            @foreach($post -> categories as $cat) 
+
+            {{ $cat -> id }},
+
             @endforeach
         ]).trigger('change');
 
@@ -133,8 +139,8 @@
             placeholder: 'Select tag',
             theme: "classic",
         }).val([
-            @foreach ($post->tags as $tag )
-                {{ $tag->id }},
+            @foreach($post -> tags as $tag) 
+            {{ $tag -> id }},
             @endforeach
         ]).trigger('change');
 
@@ -148,19 +154,19 @@
 
 
 
-$('.dropify').dropify({
+        $('.dropify').dropify({
 
-    messages: {
-        'default': 'Drag and drop a file here or click',
-        'replace': 'Drag and drop or click to replace',
-        'remove':  'Remove',
-        'error':   'Ooops, something wrong happended.'
-    },
-    tpl: { 
-        preview:         '<div class="dropify-preview" style="display:block"><span class="dropify-render"><img src="{{ $post->image }}" ></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-infos-message"></p></div></div></div>',
-    }
-});
-        
+            messages: {
+                'default': 'Drag and drop a file here or click',
+                'replace': 'Drag and drop or click to replace',
+                'remove': 'Remove',
+                'error': 'Ooops, something wrong happended.'
+            },
+            tpl: {
+                preview: '<div class="dropify-preview" style="display:block"><span class="dropify-render"><img src="{{ $post->image }}" ></span><div class="dropify-infos"><div class="dropify-infos-inner"><p class="dropify-infos-message"></p></div></div></div>',
+            }
+        });
+
 
     });
 

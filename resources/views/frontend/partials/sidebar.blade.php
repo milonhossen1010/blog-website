@@ -34,7 +34,7 @@
                                 @endphp
                                 @foreach($categories as $category)
                                     @if($category->posts->count())
-                                        <li><a href="blog-masonry.html">{{$category->name}}</a><span>{{$category->posts->count()}}</span></li>
+                                        <li><a href="{{ route('frontend.post.search', $category->id ) }}">{{$category->name}}</a><span>{{$category->posts->count()}}</span></li>
                                     @endif
                                 @endforeach
                             </ul>   
